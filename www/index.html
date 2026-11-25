@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AI System</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2B241C">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="AI System">
+<link rel="apple-touch-icon" href="icon192.png">
+<link rel="icon" href="icon192.png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F3EB;--card:#fff;--ink:#2B241C;--ink2:#3d3329;--soft:#8a7e6d;--line:#ECE5D6;--gold:#C99A3F;--gb:#FBF0DA;--rust:#9A4A2E;--rb:#F5E4DD;--green:#5B7553;--gnb:#E7EDE3;--grey:#6b7a82;--sb:env(safe-area-inset-bottom,0px);--e:cubic-bezier(.2,.9,.25,1.1)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;line-height:1.45;overscroll-behavior-y:none}
+.app{max-width:480px;margin:0 auto;padding-bottom:calc(120px + var(--sb))}
+.pad{padding:18px}
+.panel{display:none}.panel.on{display:block;animation:slide .45s var(--e)}
+@keyframes slide{from{opacity:0;transform:translateX(var(--x,0)) translateY(10px)}to{opacity:1;transform:none}}
+@keyframes up{from{opacity:0;transform:translateY(22px) scale(.97)}to{opacity:1;transform:none}}
+.rise{opacity:0;animation:up .55s var(--e) forwards}
+@keyframes fl{50%{transform:translate(-18px,14px) scale(1.15)}}
+@keyframes pu{0%{box-shadow:0 0 0 0 rgba(201,154,63,.5)}100%{box-shadow:0 0 0 12px rgba(201,154,63,0)}}
+.top{background:linear-gradient(155deg,#2B241C,#41362b);color:#fff;padding:22px 20px 28px;border-radius:0 0 34px 34px;position:relative;overflow:hidden}
+.top:before,.top:after{content:"";position:absolute;border-radius:50%;animation:fl 9s ease-in-out infinite}
+.top:before{width:190px;height:190px;right:-60px;top:-50px;background:radial-gradient(rgba(201,154,63,.32),transparent 70%)}
+.top:after{width:150px;height:150px;left:-50px;bottom:-60px;background:radial-gradient(rgba(154,74,46,.35),transparent 70%);animation-delay:-4s}
+.top>*{position:relative;z-index:1}
+h1{font-size:29px;line-height:1.15;font-weight:800;margin:16px 0 18px;letter-spacing:-.5px}
+h2{font-size:18px;font-weight:700;margin:0}
+.row{display:flex;align-items:center;justify-content:space-between}
+.hi{display:flex;align-items:center;gap:12px}
+.av{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--gold),var(--rust));display:grid;place-items:center;font-size:22px}
+.sm{font-size:12.5px;color:var(--soft)}.top .sm{color:#cdbfa6}.hi b{font-size:15px;display:block}
+.fire{background:rgba(255,255,255,.12);border-radius:20px;padding:8px 14px;font-weight:700;font-size:13px;animation:pu 2.2s infinite}
+.hr{display:flex;align-items:center;gap:20px}
+.ring{position:relative;width:118px;height:118px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:11;stroke-linecap:round}
+.ring .bg{stroke:rgba(255,255,255,.14)}.ring .fg{stroke:var(--gold);transition:stroke-dashoffset 1.3s var(--e)}
+.ring span{position:absolute;inset:0;display:grid;place-items:center;font-size:25px;font-weight:800}
+.st{flex:1;display:flex;flex-direction:column;gap:8px}
+.st div{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.09);border-radius:14px;padding:8px 12px;font-size:13px}
+.st b{font-size:15px;margin-left:auto}
+.wk{display:flex;justify-content:space-between;background:var(--card);border-radius:22px;padding:14px 12px;margin:-18px 0 22px;position:relative;z-index:2;box-shadow:0 8px 24px rgba(60,40,10,.1)}
+.wd{text-align:center;font-size:11px;color:var(--soft);font-weight:600}
+.wd i{display:block;width:28px;height:28px;border-radius:50%;margin:6px auto 0;border:2px solid var(--line);display:grid;place-items:center;font-style:normal;font-size:13px;transition:.4s var(--e)}
+.wd.p i{background:var(--gb);border-color:var(--gold)}.wd.f i{background:var(--green);border-color:var(--green);color:#fff}.wd.t i{border-color:var(--ink);transform:scale(1.15)}
+.sec{margin:6px 0 12px}.sec a{font-size:12.5px;color:var(--soft);font-weight:600}
+.chips{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px;scrollbar-width:none;padding:2px}.chips::-webkit-scrollbar{display:none}
+.chip,.btn,.dy{position:relative;overflow:hidden}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:22px;padding:9px 16px;font:600 13px 'Plus Jakarta Sans';color:var(--soft);white-space:nowrap;transition:.35s var(--e)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink);transform:scale(1.06)}
+.card{background:var(--card);border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 3px 14px rgba(60,40,10,.05);transition:transform .25s var(--e),box-shadow .25s}
+.card:active{transform:scale(.97)}
+.card.now{box-shadow:0 0 0 2px var(--gold),0 8px 24px rgba(201,154,63,.28)}
+.tk{display:flex;gap:14px;align-items:flex-start}
+.tm{flex:none;width:62px;font-size:12px;font-weight:700;padding-top:2px}.tm small{display:block;font-weight:500;color:var(--soft);font-size:11px}
+.bd{flex:1}.bd b{font-size:15px;display:block}.bd p{margin:3px 0 0;font-size:12.5px;color:var(--soft)}
+.tag{display:inline-block;margin-top:8px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.tag.deep{background:var(--rb);color:var(--rust)}.tag.mobile{background:var(--gb);color:#8a6a24}.tag.fixed{background:var(--gnb);color:var(--green)}.tag.dead{background:#e9edee;color:var(--grey)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px}
+.now .dot{animation:pu 1.6s infinite}
+.pb{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin-top:12px}.pb i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--rust));border-radius:6px;transition:width 1.2s var(--e)}
+.per{font-size:13px;font-weight:700;color:var(--soft);margin:18px 0 10px}
+.days{display:flex;gap:6px;margin-bottom:10px}
+.dy{flex:1;text-align:center;padding:10px 0;border-radius:18px;border:none;background:transparent;font-family:inherit;color:var(--soft);font-size:11.5px;transition:.4s var(--e)}
+.dy b{display:block;font-size:16px;color:var(--ink);margin-top:4px}
+.dy.on{background:var(--ink);color:#fff;transform:translateY(-4px);box-shadow:0 10px 20px rgba(43,36,28,.3)}.dy.on b{color:#fff}
+.btn{margin-top:10px;border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:9px 14px;font:700 12px 'Plus Jakarta Sans';color:var(--soft);transition:.3s var(--e)}
+.btn.on{background:var(--green);color:#fff;border-color:var(--green);transform:scale(1.05)}
+.card.done{background:var(--gnb)}
+.ck{display:flex;align-items:center;gap:12px;font-size:14px;cursor:pointer}
+.bx{width:26px;height:26px;border-radius:9px;border:2px solid var(--line);display:grid;place-items:center;color:transparent;font-size:14px;transition:.4s var(--e);flex:none}
+.ck.on .bx{background:var(--green);border-color:var(--green);color:#fff;transform:scale(1.18) rotate(360deg)}
+.ck.on span{text-decoration:line-through;color:var(--soft)}
+ul{padding-left:18px;margin:8px 0 0;font-size:13.5px}li{margin-bottom:5px}
+.rp{position:absolute;border-radius:50%;background:rgba(201,154,63,.4);transform:scale(0);animation:rp .6s ease-out;pointer-events:none}
+@keyframes rp{to{transform:scale(4);opacity:0}}
+.cf{position:fixed;width:9px;height:9px;border-radius:2px;pointer-events:none;z-index:99;animation:cf 1.1s ease-out forwards}
+@keyframes cf{to{transform:translate(var(--dx),var(--dy)) rotate(540deg);opacity:0}}
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:480px;background:#fff;border-radius:28px 28px 0 0;box-shadow:0 -8px 30px rgba(43,36,28,.1);display:flex;padding:12px 6px calc(12px + var(--sb));z-index:9}
+nav button{flex:1;border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;font:700 10.5px 'Plus Jakarta Sans';color:var(--soft);position:relative;z-index:2;transition:color .3s}
+nav .ic{font-size:21px;transition:transform .5s var(--e);display:block;height:28px;line-height:28px}
+nav button.on{color:var(--ink)}nav button.on .ic{transform:translateY(-27px) scale(1.15);filter:brightness(0) invert(1)}
+nav button span.l{transition:transform .4s var(--e)}nav button.on span.l{transform:translateY(-2px)}
+#bub{position:absolute;top:-24px;width:58px;height:58px;border-radius:50%;background:linear-gradient(145deg,var(--gold),var(--rust));border:6px solid var(--bg);box-shadow:0 8px 18px rgba(154,74,46,.35);transition:left .55s var(--e);z-index:1}
+.rs{display:block;margin:22px auto 0;background:none;border:none;color:var(--soft);font:600 11px 'Plus Jakarta Sans';text-decoration:underline}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<div class="app">
+
+<section class="panel on" id="home">
+ <div class="top">
+  <div class="row"><div class="hi"><div class="av">🌾</div><div><span class="sm" id="gr">Good Morning</span><b>Aata Chakki Owner</b></div></div><div class="fire" id="fire">🔥 0</div></div>
+  <h1>Let's Make<br>Today Productive</h1>
+  <div class="hr"><div class="ring"><svg width="118" height="118"><circle class="bg" cx="59" cy="59" r="48"/><circle class="fg" id="rg" cx="59" cy="59" r="48" stroke-dasharray="302" stroke-dashoffset="302"/></svg><span id="pc">0%</span></div>
+  <div class="st"><div>📋 Total<b>6</b></div><div>✅ Done<b id="sd">0</b></div><div>⏳ Pending<b id="sp">6</b></div></div></div>
+ </div>
+ <div class="pad"><div class="wk" id="wk"></div>
+ <div class="row sec"><h2>Abhi Ka Block</h2><a id="ph">0/12 phases</a></div><div id="nowc"></div></div>
+</section>
+
+<section class="panel" id="sch"><div class="pad">
+ <h1 style="margin:6px 0 16px">Block Schedule</h1>
+ <div class="days" id="days"></div><div id="dl"></div></div>
+</section>
+
+<section class="panel" id="rd"><div class="pad">
+ <h1 style="margin:6px 0 14px">AI Roadmap</h1>
+ <div class="card"><div class="row sm"><span>Overall progress</span><b id="pt">0/12</b></div><div class="pb"><i id="pf"></i></div></div>
+ <div class="chips" id="fl"></div><div id="pg"></div></div>
+</section>
+
+<section class="panel" id="ln"><div class="pad">
+ <h1 style="margin:6px 0 14px">Learn</h1>
+ <div class="chips" id="lt"></div><div id="lb"></div>
+ <button class="rs" onclick="resetAll()">Saara progress reset karo</button></div>
+</section>
+
+</div>
+<nav id="nv"><i id="bub"></i></nav>
+<script>
+const $=id=>document.getElementById(id),mem={};
+const S={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return mem[k]??null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){mem[k]=v}}};
+const today=new Date(),hr=today.getHours(),ds=d=>{const x=new Date(d);return x.getFullYear()+'-'+(x.getMonth()+1)+'-'+x.getDate()},dk=ds(today);
+$('gr').textContent=hr<12?'Good Morning':hr<17?'Good Afternoon':'Good Evening';
+// ripple + confetti
+document.addEventListener('click',e=>{const t=e.target.closest('.chip,.btn,.dy');if(!t)return;const r=t.getBoundingClientRect(),s=document.createElement('span');s.className='rp';const z=Math.max(r.width,r.height);s.style.cssText=`width:${z}px;height:${z}px;left:${e.clientX-r.left-z/2}px;top:${e.clientY-r.top-z/2}px`;t.appendChild(s);setTimeout(()=>s.remove(),600)});
+function burst(){const c=['#C99A3F','#9A4A2E','#5B7553','#F5E4DD'];for(let i=0;i<26;i++){const s=document.createElement('i');s.className='cf';const a=Math.random()*6.28,d=90+Math.random()*130;s.style.cssText=`left:50%;top:40%;background:${c[i%4]};--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d+60}px`;document.body.appendChild(s);setTimeout(()=>s.remove(),1100)}}
+function cnt(el,to,suf=''){let n=0,st=performance.now();const f=t=>{const p=Math.min((t-st)/900,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)))+suf;if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
+// nav
+const NV=[['home','🏠','Home'],['sch','📅','Schedule'],['rd','🤖','Roadmap'],['ln','📚','Learn']];let cur=0;
+NV.forEach(([id,ic,l],i)=>{const b=document.createElement('button');b.className=i?'':'on';b.innerHTML=`<span class="ic">${ic}</span><span class="l">${l}</span>`;b.onclick=()=>go(i);$('nv').appendChild(b)});
+function bub(){const w=$('nv').clientWidth-12,i=cur;$('bub').style.left=(6+w/4*(i+.5)-29)+'px'}
+function go(i){document.querySelectorAll('.panel').forEach((p,j)=>{p.style.setProperty('--x',(i>cur?'36px':'-36px'));p.classList.toggle('on',j==i)});document.querySelectorAll('nav button').forEach((x,j)=>x.classList.toggle('on',j==i));cur=i;bub();scrollTo({top:0});if(i==0)ring();if(i==1)list()}
+addEventListener('resize',bub);setTimeout(bub,50);
+// data
+const WK=[['Mon','Grammar lesson','AI fundamentals / prompts','Hands-on build'],['Tue','Vocabulary + reading','n8n / Sheets / API theory','Hands-on build'],['Wed','Listening (podcast/news)','Python basics (video)','Hands-on build'],['Thu','Grammar lesson','AI Agents / case studies','Hands-on build'],['Fri','Speaking drill','Freelancing content','Hands-on build'],['Sat','Weekly revision','Weekly AI revision','Portfolio / LinkedIn'],['Sun']];
+const D=(t,k,s,e,ty,n)=>({t,k,s,e,ty,n});
+const base=w=>[D('5:30 AM','Uthna, taiyar hona',5.5,6,'fixed'),D('6:00 AM','Gym',6,8,'fixed'),D('8:20 AM','Shower + English shadowing',8.33,8.7,'mobile','10 min audio'),D('8:45 AM','Shop khulti hai',8.75,9.5,'dead'),D('9:30 AM','🗣 English Block',9.5,12,'mobile',w[1]),D('12:00 PM','Lunch, shop moderate',12,13.5,'dead'),D('1:30 PM','🤖 AI Learning Block',13.5,16.5,'mobile',w[2]),D('4:30 PM','Busy — koi learning nahi',16.5,20,'dead'),D('8:00 PM','Shop band, fresh + khana',20,21,'dead'),D('9:00 PM','💻 Deep Work',21,22.5,'deep',w[3]+' · 90 min'),D('10:30 PM','Family time, no screens',22.5,23.25,'dead'),D('11:15 PM','💤 Sleep',23.25,24,'fixed')];
+const sun=[D('9:00 AM','Shop khulti hai (12–1 tak)',9,13,'dead'),D('2:00 PM','💻 Deep Work',14,16,'deep','Current AI project banao'),D('4:00 PM','Business systems',16,17,'mobile','SOP, inventory sheet'),D('5:00 PM','Weekly review + planning',17,17.5,'fixed')];
+const LB={fixed:'Fixed',mobile:'Mobile',deep:'Deep Work',dead:'Free / Busy'},CL={fixed:'#5B7553',mobile:'#C99A3F',deep:'#9A4A2E',dead:'#6b7a82'};
+const nowD=hr+today.getMinutes()/60,ti=(today.getDay()+6)%7,items=i=>i==6?sun:base(WK[i]);
+const tcard=(x,n)=>{const p=n?Math.round((nowD-x.s)/(x.e-x.s)*100):0;return `<div class="card ${n?'now':''}"><div class="tk"><div class="tm">${x.t.split(' ')[0]}<small>${x.t.split(' ')[1]}</small></div><div class="bd"><b>${x.k}</b>${x.n?`<p>${x.n}</p>`:''}<span class="tag ${x.ty}"><i class="dot" style="background:${CL[x.ty]}"></i>${LB[x.ty]}${n?' · Abhi':''}</span>${n?`<div class="pb"><i data-w="${p}"></i></div>`:''}</div></div></div>`};
+const c0=items(ti).find(x=>nowD>=x.s&&nowD<x.e)||items(ti)[0];$('nowc').innerHTML=tcard(c0,nowD>=c0.s&&nowD<c0.e);
+setTimeout(()=>document.querySelectorAll('.pb i[data-w]').forEach(i=>i.style.width=i.dataset.w+'%'),400);
+let sel=ti;const mon=new Date(today);mon.setDate(today.getDate()-ti);
+function days(){$('days').innerHTML='';WK.forEach((w,i)=>{const d=new Date(mon);d.setDate(mon.getDate()+i);const b=document.createElement('button');b.className='dy'+(i==sel?' on':'');b.innerHTML=`${w[0]}<b>${d.getDate()}</b>`;b.onclick=()=>{sel=i;days();list()};$('days').appendChild(b)})}
+function list(){const g=[['☀️ Morning',0,12],['🌤 Afternoon',12,17],['🌙 Evening',17,25]];let h='';g.forEach(([n,a,b])=>{const it=items(sel).filter(x=>x.s>=a&&x.s<b);if(it.length)h+=`<div class="per">${n}</div>`+it.map(x=>tcard(x,sel==ti&&nowD>=x.s&&nowD<x.e)).join('')});$('dl').innerHTML=h;document.querySelectorAll('#dl .card').forEach((c,i)=>{c.classList.add('rise');c.style.animationDelay=i*55+'ms'});setTimeout(()=>document.querySelectorAll('#dl .pb i[data-w]').forEach(i=>i.style.width=i.dataset.w+'%'),500)}
+days();list();
+// roadmap
+const P=[['Week 1–3','AI Fundamentals + Prompt Engineering','20 prompt templates','f'],['Week 3–6','Google Workspace + Sheets','Live inventory + sales tracker','f'],['Week 6–9','APIs, JSON, Webhooks','Form → webhook → Sheet','f'],['Week 9–14','n8n Automation','WhatsApp → Sheet → auto reply','a'],['Week 14–20','Python Basics','Sales data script','a'],['Week 20–23','Databases','Structured inventory DB','a'],['Week 23–28','AI Agents','Customer Q&A agent','a'],['Week 28–32','WhatsApp + Gmail Automation','Order confirm + follow-up','c'],['Week 32–35','CRM Systems','Customer CRM','c'],['Week 35–38','Portfolio + LinkedIn','3 case studies','c'],['Week 38–44','Cold Outreach','50 messages → 1 pilot client','c'],['Week 44+','Freelancing Live','First 3 paid clients','c']];
+function prog(){const n=Object.values(S.get('ph')||{}).filter(Boolean).length;$('pt').textContent=n+'/12';$('ph').textContent=n+'/12 phases';$('pf').style.width=n/12*100+'%'}
+P.forEach((p,i)=>{const s=S.get('ph')||{},c=document.createElement('div');c.className='card rise'+(s[i]?' done':'');c.style.animationDelay=i*40+'ms';c.dataset.s=p[3];c.innerHTML=`<div class="row"><span class="sm">Phase ${i}</span><span class="sm">${p[0]}</span></div><b>${p[1]}</b><p class="sm" style="margin:4px 0 0">Project: ${p[2]}</p><button class="btn ${s[i]?'on':''}">${s[i]?'✓ Done':'Mark project done'}</button>`;c.querySelector('.btn').onclick=function(){const t=S.get('ph')||{};t[i]=!t[i];S.set('ph',t);this.classList.toggle('on');c.classList.toggle('done');this.textContent=t[i]?'✓ Done':'Mark project done';if(t[i])burst();prog()};$('pg').appendChild(c)});
+[['all','Sab'],['f','Foundation'],['a','Automation'],['c','Client-facing']].forEach(([k,l],i)=>{const b=document.createElement('button');b.className='chip'+(i?'':' on');b.textContent=l;b.onclick=()=>{document.querySelectorAll('#fl .chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('#pg .card').forEach((c,j)=>{const sh=k=='all'||c.dataset.s==k;c.style.display=sh?'':'none';if(sh){c.classList.remove('rise');void c.offsetWidth;c.classList.add('rise');c.style.animationDelay=j*30+'ms'}})};$('fl').appendChild(b)});
+// learn
+const L={English:['10 min shadowing (audio sunkar dohrana)','20–25 min grammar ya reading','5 naye shabdon ka cluster'],Communication:['Customer handling: jawab se pehle 1 second rukna','Emotional control: gussa aane par naam dena','Storytelling: 1 cheez reason ke saath batana'],Review:['Kaunse mobile-block tasks chhoote?','Deep Work builds poore hue?','Kisi interaction se kya seekha?','Sleep 11:15 PM par hui?','Agle hafte ka Deep Work focus?'],Shop:null};
+function learn(n){$('lb').innerHTML='';if(!L[n]){$('lb').innerHTML=`<div class="card rise"><b>SOPs likho</b><ul><li>Opening/closing checklist</li><li>Grinding machine safety</li><li>Complaint handling steps</li><li>Supplier order checklist</li></ul></div><div class="card rise" style="animation-delay:80ms"><b>Inventory + Marketing</b><ul><li>Live Sheet par inventory (Phase 1)</li><li>Local WhatsApp groups / FB posts</li><li>Referral incentive</li></ul></div>`;return}
+const key=(n=='Review'?'rv':'c_'+n)+dk,s=S.get(key)||{};L[n].forEach((t,i)=>{const c=document.createElement('div');c.className='card rise';c.style.animationDelay=i*60+'ms';c.innerHTML=`<div class="ck ${s[i]?'on':''}"><div class="bx">✓</div><span>${t}</span></div>`;c.onclick=()=>{const q=S.get(key)||{};q[i]=!q[i];S.set(key,q);c.firstChild.classList.toggle('on');if(ring()==6)burst()};$('lb').appendChild(c)})}
+Object.keys(L).forEach((n,i)=>{const b=document.createElement('button');b.className='chip'+(i?'':' on');b.textContent=n;b.onclick=()=>{document.querySelectorAll('#lt .chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');learn(n)};$('lt').appendChild(b)});learn('English');
+const cn=d=>['c_English','c_Communication'].reduce((a,k)=>a+Object.values(S.get(k+ds(d))||{}).filter(Boolean).length,0);
+function ring(){const n=cn(today),p=Math.round(n/6*100);$('rg').style.strokeDashoffset=302*(1-p/100);cnt($('pc'),p,'%');cnt($('sd'),n);cnt($('sp'),6-n);let h='',f=0;WK.forEach((w,i)=>{const d=new Date(mon);d.setDate(mon.getDate()+i);const c=cn(d);if(c)f++;h+=`<div class="wd ${c==6?'f':c?'p':''} ${i==ti?'t':''}">${w[0][0]}<i>${c==6?'✓':''}</i></div>`});$('wk').innerHTML=h;$('fire').textContent='🔥 '+f;return n}
+function resetAll(){S.set('ph',{});['c_English','c_Communication','rv'].forEach(k=>S.set(k+dk,{}));location.reload()}
+prog();setTimeout(ring,350);
+</script></body></html>
