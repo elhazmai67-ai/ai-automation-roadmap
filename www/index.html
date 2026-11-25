@@ -2,19 +2,19 @@
 <html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>AI System</title>
+<title>AI Roadmap</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2B241C">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="AI System">
+<meta name="apple-mobile-web-app-title" content="AI Roadmap">
 <link rel="apple-touch-icon" href="icon192.png">
 <link rel="icon" href="icon192.png">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#F7F3EB;--card:#fff;--ink:#2B241C;--ink2:#3d3329;--soft:#8a7e6d;--line:#ECE5D6;--gold:#C99A3F;--gb:#FBF0DA;--rust:#9A4A2E;--rb:#F5E4DD;--green:#5B7553;--gnb:#E7EDE3;--grey:#6b7a82;--sb:env(safe-area-inset-bottom,0px);--e:cubic-bezier(.2,.9,.25,1.1)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;line-height:1.45;overscroll-behavior-y:none}
+html{overflow-x:hidden}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;line-height:1.45;overscroll-behavior-y:none;overflow-x:hidden}
 .app{max-width:480px;margin:0 auto;padding-bottom:calc(120px + var(--sb))}
 .pad{padding:18px}
 .panel{display:none}.panel.on{display:block;animation:slide .45s var(--e)}
@@ -49,9 +49,9 @@ h2{font-size:18px;font-weight:700;margin:0}
 .wd i{display:block;width:28px;height:28px;border-radius:50%;margin:6px auto 0;border:2px solid var(--line);display:grid;place-items:center;font-style:normal;font-size:13px;transition:.4s var(--e)}
 .wd.p i{background:var(--gb);border-color:var(--gold)}.wd.f i{background:var(--green);border-color:var(--green);color:#fff}.wd.t i{border-color:var(--ink);transform:scale(1.15)}
 .sec{margin:6px 0 12px}.sec a{font-size:12.5px;color:var(--soft);font-weight:600}
-.chips{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px;scrollbar-width:none;padding:2px}.chips::-webkit-scrollbar{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;padding:2px}.chips::-webkit-scrollbar{display:none}
 .chip,.btn,.dy{position:relative;overflow:hidden}
-.chip{border:1px solid var(--line);background:var(--card);border-radius:22px;padding:9px 16px;font:600 13px 'Plus Jakarta Sans';color:var(--soft);white-space:nowrap;transition:.35s var(--e)}
+.chip{flex:none;border:1px solid var(--line);background:var(--card);border-radius:22px;padding:9px 16px;font:600 13px 'Plus Jakarta Sans';color:var(--soft);white-space:nowrap;transition:.35s var(--e)}
 .chip.on{background:var(--ink);color:#fff;border-color:var(--ink);transform:scale(1.06)}
 .card{background:var(--card);border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 3px 14px rgba(60,40,10,.05);transition:transform .25s var(--e),box-shadow .25s}
 .card:active{transform:scale(.97)}
@@ -83,10 +83,12 @@ ul{padding-left:18px;margin:8px 0 0;font-size:13.5px}li{margin-bottom:5px}
 @keyframes cf{to{transform:translate(var(--dx),var(--dy)) rotate(540deg);opacity:0}}
 nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:480px;background:#fff;border-radius:28px 28px 0 0;box-shadow:0 -8px 30px rgba(43,36,28,.1);display:flex;padding:12px 6px calc(12px + var(--sb));z-index:9}
 nav button{flex:1;border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;font:700 10.5px 'Plus Jakarta Sans';color:var(--soft);position:relative;z-index:2;transition:color .3s}
-nav .ic{font-size:21px;transition:transform .5s var(--e);display:block;height:28px;line-height:28px}
-nav button.on{color:var(--ink)}nav button.on .ic{transform:translateY(-27px) scale(1.15);filter:brightness(0) invert(1)}
+nav .ic{width:26px;height:28px;display:grid;place-items:center;transition:transform .5s var(--e)}
+nav .ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--ink)}nav button.on .ic{transform:translateY(-27px) scale(1.1);color:#fff}
 nav button span.l{transition:transform .4s var(--e)}nav button.on span.l{transform:translateY(-2px)}
-#bub{position:absolute;top:-24px;width:58px;height:58px;border-radius:50%;background:linear-gradient(145deg,var(--gold),var(--rust));border:6px solid var(--bg);box-shadow:0 8px 18px rgba(154,74,46,.35);transition:left .55s var(--e);z-index:1}
+#bub{position:absolute;top:-24px;left:6px;width:calc((100% - 12px)/4);height:58px;display:flex;justify-content:center;transform:translateX(calc(var(--i,0)*100%));transition:transform .55s var(--e);z-index:1;pointer-events:none}
+#bub i{display:block;width:58px;height:58px;border-radius:50%;background:linear-gradient(145deg,var(--gold),var(--rust));border:6px solid var(--bg);box-shadow:0 8px 18px rgba(154,74,46,.35)}
 .rs{display:block;margin:22px auto 0;background:none;border:none;color:var(--soft);font:600 11px 'Plus Jakarta Sans';text-decoration:underline}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
@@ -121,7 +123,7 @@ nav button span.l{transition:transform .4s var(--e)}nav button.on span.l{transfo
 </section>
 
 </div>
-<nav id="nv"><i id="bub"></i></nav>
+<nav id="nv"><div id="bub"><i></i></div></nav>
 <script>
 const $=id=>document.getElementById(id),mem={};
 const S={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return mem[k]??null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){mem[k]=v}}};
@@ -132,9 +134,10 @@ document.addEventListener('click',e=>{const t=e.target.closest('.chip,.btn,.dy')
 function burst(){const c=['#C99A3F','#9A4A2E','#5B7553','#F5E4DD'];for(let i=0;i<26;i++){const s=document.createElement('i');s.className='cf';const a=Math.random()*6.28,d=90+Math.random()*130;s.style.cssText=`left:50%;top:40%;background:${c[i%4]};--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d+60}px`;document.body.appendChild(s);setTimeout(()=>s.remove(),1100)}}
 function cnt(el,to,suf=''){let n=0,st=performance.now();const f=t=>{const p=Math.min((t-st)/900,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)))+suf;if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
 // nav
-const NV=[['home','🏠','Home'],['sch','📅','Schedule'],['rd','🤖','Roadmap'],['ln','📚','Learn']];let cur=0;
+const IC={home:'<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>',sch:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',rd:'<svg viewBox="0 0 24 24"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h7a3.5 3.5 0 000-7H9a3.5 3.5 0 010-7h7"/></svg>',ln:'<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20V3H6.5A2.5 2.5 0 004 5.5z"/><path d="M8 7h8M8 11h5"/></svg>'};
+const NV=[['home',IC.home,'Home'],['sch',IC.sch,'Schedule'],['rd',IC.rd,'Roadmap'],['ln',IC.ln,'Learn']];let cur=0;
 NV.forEach(([id,ic,l],i)=>{const b=document.createElement('button');b.className=i?'':'on';b.innerHTML=`<span class="ic">${ic}</span><span class="l">${l}</span>`;b.onclick=()=>go(i);$('nv').appendChild(b)});
-function bub(){const w=$('nv').clientWidth-12,i=cur;$('bub').style.left=(6+w/4*(i+.5)-29)+'px'}
+function bub(){$('nv').style.setProperty('--i',cur)}
 function go(i){document.querySelectorAll('.panel').forEach((p,j)=>{p.style.setProperty('--x',(i>cur?'36px':'-36px'));p.classList.toggle('on',j==i)});document.querySelectorAll('nav button').forEach((x,j)=>x.classList.toggle('on',j==i));cur=i;bub();scrollTo({top:0});if(i==0)ring();if(i==1)list()}
 addEventListener('resize',bub);setTimeout(bub,50);
 // data
