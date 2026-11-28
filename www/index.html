@@ -41,7 +41,7 @@ h2{font:700 19px/1.2 'Fraunces',serif;margin:0}
 .hf{display:flex;align-items:center;gap:14px;font-size:13px;position:relative;z-index:1}.hf b{margin-left:auto}
 .pl{width:42px;height:42px;border-radius:50%;border:none;background:var(--acc);color:var(--pri);font-size:16px}
 .sec{margin:6px 0 12px}.sec a{font-size:12.5px;color:var(--soft);font-weight:600}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chips{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px;margin-bottom:14px}
 .chip,.btn,.dy,.big{position:relative;overflow:hidden}
 .chip{flex:none;border:none;background:var(--tile);border-radius:22px;padding:9px 16px;font:600 13px 'Plus Jakarta Sans';color:var(--soft);transition:.35s var(--e)}
 .chip.on{background:var(--pri);color:#fff;transform:scale(1.05)}
@@ -263,8 +263,8 @@ if(em1){const a=document.createElement('button');a.className='chip';a.textConten
 else if(!L.length)$('lb').innerHTML='<p class="sm">Koi task nahi. ✎ Edit dabake add karo.</p>'}
 $('lb').addEventListener('change',e=>{if(e.target.matches('input[data-id]')){const c=cp(lists()),x=c[cat].find(y=>y.id==e.target.dataset.id);if(x){x.t=e.target.value.trim()||x.t;S.set('lists',c)}}});
 $('lb').addEventListener('click',e=>{const b=e.target.closest('.xb');if(b){const c=cp(lists());c[cat]=c[cat].filter(y=>y.id!=b.dataset.id);S.set('lists',c);learn()}});
-Object.keys(DEFL).forEach((n,i)=>{const b=document.createElement('button');b.className='chip'+(i?'':' on');b.textContent=n;b.onclick=()=>{document.querySelectorAll('#lt .chip:not(.ed)').forEach(x=>x.classList.remove('on'));b.classList.add('on');learn(n)};$('lt').appendChild(b)});
-const eb=document.createElement('button');eb.className='chip ed';eb.textContent='✎ Edit';eb.onclick=()=>{em1=!em1;eb.classList.toggle('on',em1);eb.textContent=em1?'✓ Done':'✎ Edit';learn()};$('lt').appendChild(eb);
+Object.keys(DEFL).forEach((n,i)=>{const b=document.createElement('button');b.className='chip'+(i?'':' on');b.textContent=n;b.onclick=()=>{document.querySelectorAll('#lt .chip:not(.edt)').forEach(x=>x.classList.remove('on'));b.classList.add('on');learn(n)};$('lt').appendChild(b)});
+const eb=document.createElement('button');eb.className='chip edt';eb.textContent='✎ Edit';eb.onclick=()=>{em1=!em1;eb.classList.toggle('on',em1);eb.textContent=em1?'✓ Done':'✎ Edit';learn()};$('lt').appendChild(eb);
 const cn=d=>['English','Communication'].reduce((a,c)=>{const m=S.get('c_'+c+ds(d))||{};return a+lists()[c].filter(x=>m[x.id]).length},0);
 // progress
 const mins=d=>S.get('m_'+ds(d))||0,GOAL=()=>S.get('goal')||300,wkTot=()=>[0,1,2,3,4,5,6].reduce((a,i)=>a+mins(day(i)),0);
